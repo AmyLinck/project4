@@ -5,22 +5,23 @@ from Distance import euclidean
 
 def main():
 
-    alg = "cl"
+    alg = "db"
     dataset = "census"
 
     input = PreProcess().determine_dataset(dataset)
 
     if alg == "km":
         print("K-Means Clustering")
-        k = 10
+        k = 80
         clusters = []
         clusters_temp = K_Means.K_Means(input,k).get_clusters()
         for cluster in clusters_temp:
             clusters.append(cluster.points)
+        print("K: " + str(k))
     elif alg == "db":
         print("DB-Scan")
-        minPts = 2
-        threshold = 0.2
+        minPts = 250   # 2 percent of the number of instances  #water-11, abalone-209, cmc-73, epileptic-250, census-250
+        threshold = 0.1
         clusters_temp = DB_Scan.db_scan(input, minPts, threshold)
         clusters = []
         for c in clusters_temp:
@@ -29,13 +30,17 @@ def main():
                 point = point[:-1]                                   #strip the labels
                 cluster.append(point)
             clusters.append(cluster)
+        print("Min Points: " + str(minPts))
+        print("Threshold: " + str(threshold))
     elif alg == "cl":
-        hiddenNodes = 200
-        iterations = 5000
+        hiddenNodes = 150
+        iterations = 10000
         learnRate = 0.001
         print("Competitive Learning Neural Network")
         clusters = CL_NN.competitiveLearning(input, hiddenNodes, iterations, learnRate)
-
+        print("hidden nodes: " + str(hiddenNodes))
+        print("iterations: " + str(iterations))
+        print("learning rate: " + str(learnRate))
     elif alg == "aco":
         print("Ant-Colony Optimization")
         clusters = []
@@ -47,6 +52,7 @@ def main():
     print("\nNumClusters:", len(clusters))
     print("\nNumPerCluster:", [len(x) for x in clusters])
     evaluate_cluster(clusters)
+    print(dataset)
 
 def evaluate_cluster(clusters):
     coh = 0
