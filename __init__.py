@@ -1,13 +1,15 @@
 from pre_process import *
+from Distance.euclidean import *
 from K_Means import *
 import DB_Scan
+from CL_NN import *
 from ACO import *
 from PSO import *
 from CL_NN import *
 
 def main():
 
-    alg = "db"
+    alg = "cl"
     dataset = "cmc"
 
     input = PreProcess().determine_dataset(dataset)
@@ -32,8 +34,12 @@ def main():
                 cluster.append(point)
             clusters.append(cluster)
     elif alg == "cl":
+        hiddenNodes = 200
+        iterations = 5000
+        learnRate = 0.001
         print("Competitive Learning Neural Network")
-        clusters = []
+        clusters = competitiveLearning(input, hiddenNodes, iterations, learnRate)
+
     elif alg == "aco":
         print("Ant-Colony Optimization")
         clusters = []
@@ -62,14 +68,14 @@ def cohesian(cluster):
     for x in cluster:
         for y in cluster:
             if x != y:
-                cohesian += DB_Scan.get_euclid_distance(x, y)
+                cohesian += get_euclidean_distance(x, y)
     return cohesian / len(cluster)
 
 def separation(c1, c2):
     sep = 0
     for x in c1:
         for y in c2:
-            sep += DB_Scan.get_euclid_distance(x,y)
+            sep += get_euclidean_distance(x,y)
     return sep
 
 if __name__ == '__main__':

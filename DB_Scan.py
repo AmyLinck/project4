@@ -1,4 +1,5 @@
 import math
+from Distance.euclidean import *
 
 
 def db_scan(input, minPts, threshold):
@@ -6,7 +7,7 @@ def db_scan(input, minPts, threshold):
     epsilon = 0                                                                         #theta threshold
     for x in input:
         for y in input:
-            epsilon = max(epsilon, get_euclid_distance(x, y))                      #if euclidean distance is larger than epsilon set that to epsilon
+            epsilon = max(epsilon, get_euclidean_distance(x, y))                      #if euclidean distance is larger than epsilon set that to epsilon
     epsilon = threshold * epsilon
     clusters = []
     iteration = 0
@@ -29,19 +30,10 @@ def db_scan(input, minPts, threshold):
         iteration += 1
     return[x for x in clusters if x != []]
 
-
-def get_euclid_distance(a,b):                                                      #euclidean distance between two n-dimensional points
-    difference = 0.0
-    for i in range(len(a)):
-        squareDifference = pow(((a[i]) - b[i]), 2)
-        difference += squareDifference
-    distance = math.sqrt(difference)
-    return distance
-
 def get_neighbors(input, pt, epsilon):
     neighbors = []
     for i in range(len(input)):
-        distance = get_euclid_distance(input[pt][0:-1], input[i][0:-1])
+        distance = get_euclidean_distance(input[pt][0:-1], input[i][0:-1])
         if distance < epsilon:                                                          # find the neighbors around pt by checking if the euclidean distance is less than epsilon
             neighbors.append(input[i])
     return neighbors

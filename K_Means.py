@@ -1,5 +1,6 @@
 import random
 import math
+from Distance.euclidean import *
 
 class K_Means:
     def __init__(self,input_values,clusterCount):
@@ -25,10 +26,10 @@ class K_Means:
             print("Iteration " + str(iteration))
             lists = [[] for _ in clusters]                                           #holds points in each cluster
             for point in self.dataPoints:                                            # For every data point in the data set
-                smallest_distance = self.get_distance(point, clusters[0].centroid)       # Get the distance between that point and the centroid of the first cluster
+                smallest_distance = get_euclidean_distance(point, clusters[0].centroid)       # Get the distance between that point and the centroid of the first cluster
                 clusterIndex = 0                                                     # Set the cluster this point belongs to
                 for i in range(self.clusterCount - 1):                               #for the rest of the clusters
-                    distance = self.get_distance(point, clusters[i + 1].centroid)        # calculate the distance of that point to each other cluster's centroid
+                    distance = get_euclidean_distance(point, clusters[i + 1].centroid)        # calculate the distance of that point to each other cluster's centroid
                     if distance < smallest_distance:                                 # If it's closer to that cluster's centroid
                         smallest_distance = distance                                 #update the smallest distance
                         clusterIndex = i + 1
@@ -54,17 +55,10 @@ class K_Means:
     def calculate_sigmoid(self,cluster):                                             # compute sigma or width of cluster
         euclid_distance_sum = 0
         for i in cluster.points:
-            euclid_distance_sum += self.get_distance(i,cluster.centroid)
+            euclid_distance_sum += get_euclidean_distance(i,cluster.centroid)
         cluster.sigmoid = (1/len(cluster.points)) * euclid_distance_sum
         return cluster.sigmoid
 
-    def get_distance(self,a,b):                                                      #euclidean distance between two n-dimensional points
-        difference = 0.0
-        for i in range(len(a)):
-            squareDifference = pow(((a[i]) - b[i]), 2)
-            difference += squareDifference
-        distance = math.sqrt(difference)
-        return distance
 
     def get_clusters(self):
         return self.clusters
@@ -101,16 +95,8 @@ class Cluster:
             shift = 0
         else:
             self.centroid = self.calculate_centroid()                                #otherwise recalculate the centroid of the cluster given the points
-            shift = self.get_centroids_distance(old_centroid, self.centroid)         #calculate the shift in position from the previous centroid to the current centroid
+            shift = get_euclidean_distance(old_centroid, self.centroid)         #calculate the shift in position from the previous centroid to the current centroid
         return shift
-
-    def get_centroids_distance(self,a,b):                                            #euclidean distance between two n-dimensional centroids
-        difference = 0.0
-        for i in range(len(a)):
-            squareDifference = pow(((a[i]) - b[i]), 2)
-            difference += squareDifference
-        distance = math.sqrt(difference)
-        return distance
 
     def calculate_centroid(self):
         numPoints = len(self.points)
