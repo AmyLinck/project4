@@ -1,11 +1,7 @@
-from pre_process import *
-from Distance.euclidean import *
-from K_Means import *
-import DB_Scan
-from CL_NN import *
-from ACO import *
-from PSO import *
-from CL_NN import *
+from Clustering import K_Means, CL_NN, DB_Scan
+from Data.pre_process import *
+from Distance import euclidean
+
 
 def main():
 
@@ -18,14 +14,14 @@ def main():
         print("K-Means Clustering")
         k = 10
         clusters = []
-        clusters_temp = K_Means(input,k).get_clusters()
+        clusters_temp = K_Means.K_Means(input,k).get_clusters()
         for cluster in clusters_temp:
             clusters.append(cluster.points)
     elif alg == "db":
         print("DB-Scan")
         minPts = 2
         threshold = 0.2
-        clusters_temp = DB_Scan.db_scan(input,minPts, threshold)
+        clusters_temp = DB_Scan.db_scan(input, minPts, threshold)
         clusters = []
         for c in clusters_temp:
             cluster = []
@@ -38,7 +34,7 @@ def main():
         iterations = 5000
         learnRate = 0.001
         print("Competitive Learning Neural Network")
-        clusters = competitiveLearning(input, hiddenNodes, iterations, learnRate)
+        clusters = CL_NN.competitiveLearning(input, hiddenNodes, iterations, learnRate)
 
     elif alg == "aco":
         print("Ant-Colony Optimization")
@@ -68,14 +64,14 @@ def cohesian(cluster):
     for x in cluster:
         for y in cluster:
             if x != y:
-                cohesian += get_euclidean_distance(x, y)
+                cohesian += euclidean.get_euclidean_distance(x, y)
     return cohesian / len(cluster)
 
 def separation(c1, c2):
     sep = 0
     for x in c1:
         for y in c2:
-            sep += get_euclidean_distance(x,y)
+            sep += euclidean.get_euclidean_distance(x,y)
     return sep
 
 if __name__ == '__main__':
