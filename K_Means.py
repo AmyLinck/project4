@@ -13,7 +13,7 @@ class K_Means:
     def form_dataset(self,input_values):
         data_points = []
         for i in range(len(input_values)):
-            data_point = Data_point(input_values[i])
+            data_point = input_values[i]
             data_points.append(data_point)                                           #forms list of n dimensional data points
         return data_points
 
@@ -39,7 +39,7 @@ class K_Means:
                 break
         index = 1
         for i in clusters:
-            print(("Cluster " + str(index) + " has " + str(len(i.points)) + " data points with centroid " + str(i.centroid.coords)))
+            print(("Cluster " + str(index) + " has " + str(len(i.points)) + " data points with centroid " + str(i.centroid)))
             print("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
             index += 1
             #if len(i.points) != 0:
@@ -57,8 +57,8 @@ class K_Means:
 
     def get_distance(self,a,b):                                                      #euclidean distance between two n-dimensional points
         difference = 0.0
-        for i in range(a.n):
-            squareDifference = pow(((a.coords[i]) - b.coords[i]), 2)
+        for i in range(len(a)):
+            squareDifference = pow(((a[i]) - b[i]), 2)
             difference += squareDifference
         distance = math.sqrt(difference)
         return distance
@@ -103,8 +103,8 @@ class Cluster:
 
     def get_centroids_distance(self,a,b):                                            #euclidean distance between two n-dimensional centroids
         difference = 0.0
-        for i in range(a.n):
-            squareDifference = pow(((a.coords[i]) - b.coords[i]), 2)
+        for i in range(len(a)):
+            squareDifference = pow(((a[i]) - b[i]), 2)
             difference += squareDifference
         distance = math.sqrt(difference)
         return distance
@@ -112,22 +112,11 @@ class Cluster:
     def calculate_centroid(self):
         numPoints = len(self.points)
         dim_array = []
-        for i in range(self.points[0].n):                                            #for n dimensions
+        for i in range(len(self.points[0])):                                            #for n dimensions
             sum = 0
             for j in range(numPoints):                                               #all points in the cluster
-                sum  += self.points[j].coords[i]
+                sum  += self.points[j][i]
             dim_array.append(float(sum/numPoints))                                     #sum all dimensions together and then get average
         centroid_coords = [dList for dList in dim_array]                             #add each mean to coordinates
-        return Data_point(centroid_coords)
+        return centroid_coords
 
-class Data_point:
-    def __init__(self, coords):
-        self.coords = self.create_int_array(coords)
-        self.n = len(coords)                                                        #dimension
-
-    def create_int_array(self,coords):                                              #convert string to list of integers
-        coordinate_list =[]
-        for i in range(len(coords)):
-            coordinate = float(coords[i])
-            coordinate_list.append(coordinate)
-        return coordinate_list

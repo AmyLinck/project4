@@ -6,16 +6,22 @@ class PreProcess:
     def determine_dataset(self,dataset):
         input = []
         if dataset == "abalone":
+            print("Abalone Dataset")
             input = self.process_abalone()
         elif dataset == "cmc":
+            print("Contraceptive Method Choice Dataset")
             input = self.process_cmc()
         elif dataset == "epileptic":
+            print("Epileptic Seizure Dataset")
             input = self.process_epileptic()
         elif dataset == "census":
+            print("US Census 1990 Dataset")
             input = self.process_census()
         elif dataset == "water":
+            print("Water Treatment Dataset")
             input = self.process_water()
         else:
+            print("Testing Dataset")
             input = self.process_fert()
         return input
 
