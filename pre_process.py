@@ -15,6 +15,8 @@ class PreProcess:
             input = self.process_census()
         elif dataset == "water":
             input = self.process_water()
+        else:
+            input = self.process_fert()
         return input
 
     def process_abalone(self):
@@ -86,5 +88,18 @@ class PreProcess:
                             if row[element] == "?":
                                 row[element] = 0.0
                             example.append(float(row[element]))
+                input.append(example)
+        return input
+
+
+    def process_fert(self): #just for quick testing
+        input = []
+        with codecs.open('Data/fertility.csv', 'r', encoding='utf-8') as fertility:
+            csv_input = csv.reader(fertility, delimiter=",")
+            for row in csv_input:
+                example = []
+                for element in range(len(row)):
+                    if element < len(row) - 1:
+                        example.append(float(row[element]))
                 input.append(example)
         return input
