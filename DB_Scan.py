@@ -9,9 +9,11 @@ def db_scan(input, minPts, threshold):
             epsilon = max(epsilon, get_euclid_distance(x, y))                      #if euclidean distance is larger than epsilon set that to epsilon
     epsilon = threshold * epsilon
     clusters = []
+    iteration = 0
     for i in range(len(input)):
         input[i].append('null')
     for i in range(len(input)):
+        print("Iteration " + str(iteration))
         if input[i][-1] != 'null':                                                      #skip input if already marked
             pass
         else:
@@ -24,6 +26,7 @@ def db_scan(input, minPts, threshold):
                 nextCluster = expand_cluster(clusters, input, neighbors, epsilon, minPts)
                 clusters.append(nextCluster)
                 cluster += 1
+        iteration += 1
     return[x for x in clusters if x != []]
 
 

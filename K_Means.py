@@ -20,7 +20,9 @@ class K_Means:
     def form_clusters(self):
         initial = random.sample(self.dataPoints, self.clusterCount)                  #initially choose k random points in the data sets for the centroids and form clusters according to those centroids
         clusters = [Cluster(p) for p in initial]
+        iteration = 0
         while True:
+            print("Iteration " + str(iteration))
             lists = [[] for _ in clusters]                                           #holds points in each cluster
             for point in self.dataPoints:                                            # For every data point in the data set
                 smallest_distance = self.get_distance(point, clusters[0].centroid)       # Get the distance between that point and the centroid of the first cluster
@@ -37,6 +39,7 @@ class K_Means:
                 biggest_shift = max(biggest_shift, shift)                            #keep track of the biggest change
             if biggest_shift < self.cutoff:                                          #if the centroids have stopped moving then we have convergence
                 break
+            iteration += 1
         index = 1
         for i in clusters:
             print(("Cluster " + str(index) + " has " + str(len(i.points)) + " data points with centroid " + str(i.centroid)))
