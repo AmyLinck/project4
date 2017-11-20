@@ -1,4 +1,4 @@
-from Clustering import K_Means, CL_NN, DB_Scan
+from Clustering import K_Means, CL_NN, DB_Scan, PSO
 from Data.pre_process import *
 from Distance import euclidean
 
@@ -46,7 +46,9 @@ def main():
         clusters = []
     elif alg == "pso":
         print("Particle Swarm Optimization")
-        clusters = []
+        numClusters = 80    #one more than CL produced
+        iterations = 100
+        clusters = PSO.PSO(input, numClusters, iterations)
 
     print("\nClusters:\n" + str(clusters))
     print("\nNumClusters:", len(clusters))
