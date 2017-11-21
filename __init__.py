@@ -5,14 +5,14 @@ from Distance import euclidean
 
 def main():
 
-    alg = "db"
+    alg = "km"
     dataset = "census"
 
     input = PreProcess().determine_dataset(dataset)
 
     if alg == "km":
         print("K-Means Clustering")
-        k = 80
+        k = 147  #one more than CL
         clusters = []
         clusters_temp = K_Means.K_Means(input,k).get_clusters()
         for cluster in clusters_temp:
@@ -20,7 +20,7 @@ def main():
         print("K: " + str(k))
     elif alg == "db":
         print("DB-Scan")
-        minPts = 250   # 2 percent of the number of instances  #water-11, abalone-209, cmc-73, epileptic-250, census-250
+        minPts = 11   # 2 percent of the number of instances  #water-11, abalone-40, cmc-73, epileptic-10, census-20
         threshold = 0.1
         clusters_temp = DB_Scan.db_scan(input, minPts, threshold)
         clusters = []

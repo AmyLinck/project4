@@ -7,3 +7,9 @@ NumPerCluster: [252, 93, 80, 188, 228, 150, 109, 120, 74, 89, 123, 180, 192, 168
 NumClusters: 1108
 
 Num_Iterations: 1460
+
+Cohesion: 597827.7051493195
+
+Seperation:  140590510263.20853
+cmc
+
