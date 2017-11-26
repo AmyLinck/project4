@@ -3,6 +3,14 @@ import numpy
 import math
 from Distance.euclidean import *
 
+"""Takes in input data, number of hidden nodes,
+number of iterations, and learning rate.  Feeds
+input vectors into hidden nodes and assigns a random 
+weight between 0 and 1.  Weighted sums are calculated
+and used to determine the winning weight.  Winning weight
+is updated when new optimal weights are found until the 
+max number of iterations is reached. Returns the clusters formed."""
+
 #change dimensions of matrix for clustering purposes
 def rescaleMatrix(matrix, fromMinVal, fromMaxVal, toMinVal, toMaxVal):
     new_matrix = []

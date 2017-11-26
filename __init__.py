@@ -1,18 +1,20 @@
-from Clustering import K_Means, CL_NN, DB_Scan, PSO
+from Clustering import K_Means, CL_NN, DB_Scan, PSO, ACO
 from Data.pre_process import *
 from Distance import euclidean
 
+"""Handler to call the data processor and all the clustering algorithms.
+   Tunable parameters can be adjusted in here.
+   Cohesion and separation are calculated and printed out."""
 
 def main():
+    alg = "pso"        #clustering algorithm you wish to run
+    dataset = "water"  #data set you wish to cluster
 
-    alg = "km"
-    dataset = "census"
-
-    input = PreProcess().determine_dataset(dataset)
+    input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
 
     if alg == "km":
         print("K-Means Clustering")
-        k = 147  #one more than CL
+        k = 147  #one more than CL formed
         clusters = []
         clusters_temp = K_Means.K_Means(input,k).get_clusters()
         for cluster in clusters_temp:
@@ -43,12 +45,18 @@ def main():
         print("learning rate: " + str(learnRate))
     elif alg == "aco":
         print("Ant-Colony Optimization")
-        clusters = []
+        ants = 10
+        iterations = 1000
+        print("number of ants: " + str(ants))
+        print("iterations: " + str(iterations))
+        clusters = ACO.aco(input, ants, iterations)
     elif alg == "pso":
         print("Particle Swarm Optimization")
-        numClusters = 80    #one more than CL produced
+        numClusters = 127    #one more than CL produced  #abalone - 127, cmc - 149, epileptic - 126, census - 147, water - 127
         iterations = 100
-        clusters = PSO.PSO(input, numClusters, iterations)
+        print("Max number of clusters: " + str(numClusters))
+        print("iterations: " + str(iterations))
+        clusters = PSO.pso(input, numClusters, iterations)
 
     print("\nClusters:\n" + str(clusters))
     print("\nNumClusters:", len(clusters))
@@ -56,7 +64,7 @@ def main():
     evaluate_cluster(clusters)
     print(dataset)
 
-def evaluate_cluster(clusters):
+def evaluate_cluster(clusters):    #calcualte cohesion and separation of the formed clusters
     coh = 0
     sep = 0
     for cluster1 in clusters:
@@ -72,6 +80,7 @@ def cohesian(cluster):
     for x in cluster:
         for y in cluster:
             if x != y:
+                print(x)
                 cohesian += euclidean.get_euclidean_distance(x, y)
     return cohesian / len(cluster)
 

@@ -1,6 +1,12 @@
 import csv
 import codecs
 
+"""Takes in a string to tell which dataset csv file to pull from.
+Any categorical features are removed from the input vectors.
+All labels are stripped from the input vectors.
+Sets any missing data features to zero.
+Returns a vector of input vectors back to the handler."""
+
 class PreProcess:
 
     def determine_dataset(self,dataset):

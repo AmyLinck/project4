@@ -1,10 +1,14 @@
 import math
 from Distance.euclidean import *
 
+"""Takes in input data, min points to form a dense region,
+and a threshold to adjust the epsilon.  Groups input data
+together in neighborhoods that are close proximity.  Returns 
+the clusters formed."""
 
 def db_scan(input, minPts, threshold):
     cluster = 0
-    epsilon = 0                                                                         #theta threshold
+    epsilon = 0                                                                       #theta threshold
     for x in input:
         for y in input:
             epsilon = max(epsilon, get_euclidean_distance(x, y))                      #if euclidean distance is larger than epsilon set that to epsilon
@@ -38,7 +42,7 @@ def get_neighbors(input, pt, epsilon):
             neighbors.append(input[i])
     return neighbors
 
-def expand_cluster(clusters, input, neighbors, epsilon, minPts):                  #create a cluster based on a point's neighbors
+def expand_cluster(clusters, input, neighbors, epsilon, minPts):                        #create a cluster based on a point's neighbors
     in_cluster = False
     cluster = []
     for i in range(len(neighbors)):

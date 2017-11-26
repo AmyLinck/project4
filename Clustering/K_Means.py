@@ -2,6 +2,13 @@ import random
 import math
 from Distance.euclidean import *
 
+"""Takes input data and value k as the number of clusters
+you wish k-means to form. Makes an initial guess for 
+where the centroids are and updates them as 
+inputs are clustered.  Stops when the centroids'
+shift is less then the cutoff value.  Returns formed
+clusters."""
+
 class K_Means:
     def __init__(self,input_values,clusterCount):
         self.clusterCount = clusterCount                                             #k
@@ -46,10 +53,11 @@ class K_Means:
             print(("Cluster " + str(index) + " has " + str(len(i.points)) + " data points with centroid " + str(i.centroid)))
             print("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
             index += 1
+            #used for RBF
             #if len(i.points) != 0:
             #    i.sigmoid = self.calculate_sigmoid(i)
             #if i.sigmoid != 0:
-            #    i.beta = 1 / (2 * (math.pow(i.sigmoid, 2)))                                # beta value for gaussian activation function in rbf
+            #    i.beta = 1 / (2 * (math.pow(i.sigmoid, 2)))                         # beta value for gaussian activation function in rbf
         return clusters
 
     def calculate_sigmoid(self,cluster):                                             # compute sigma or width of cluster
@@ -95,17 +103,17 @@ class Cluster:
             shift = 0
         else:
             self.centroid = self.calculate_centroid()                                #otherwise recalculate the centroid of the cluster given the points
-            shift = get_euclidean_distance(old_centroid, self.centroid)         #calculate the shift in position from the previous centroid to the current centroid
+            shift = get_euclidean_distance(old_centroid, self.centroid)              #calculate the shift in position from the previous centroid to the current centroid
         return shift
 
     def calculate_centroid(self):
         numPoints = len(self.points)
         dim_array = []
-        for i in range(len(self.points[0])):                                            #for n dimensions
+        for i in range(len(self.points[0])):                                         #for n dimensions
             sum = 0
             for j in range(numPoints):                                               #all points in the cluster
                 sum  += self.points[j][i]
-            dim_array.append(float(sum/numPoints))                                     #sum all dimensions together and then get average
+            dim_array.append(float(sum/numPoints))                                   #sum all dimensions together and then get average
         centroid_coords = [dList for dList in dim_array]                             #add each mean to coordinates
         return centroid_coords
 
