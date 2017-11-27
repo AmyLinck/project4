@@ -8,7 +8,7 @@ from Distance import euclidean
 
 def main():
     alg = "pso"        #clustering algorithm you wish to run
-    dataset = "water"  #data set you wish to cluster
+    dataset = "balance"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
 
@@ -47,18 +47,18 @@ def main():
         print("Ant-Colony Optimization")
         ants = 10
         iterations = 1000
+        clusters = ACO.aco(input, ants, iterations)
         print("number of ants: " + str(ants))
         print("iterations: " + str(iterations))
-        clusters = ACO.aco(input, ants, iterations)
     elif alg == "pso":
         print("Particle Swarm Optimization")
-        numClusters = 127    #one more than CL produced  #abalone - 127, cmc - 149, epileptic - 126, census - 147, water - 127
-        iterations = 100
+        numClusters = 10    #one more than CL produced  #abalone - 127, cmc - 149, epileptic - 126, census - 147, water - 127
+        iterations = 5
+        clusters = PSO.pso(input, numClusters, iterations)
         print("Max number of clusters: " + str(numClusters))
         print("iterations: " + str(iterations))
-        clusters = PSO.pso(input, numClusters, iterations)
 
-    print("\nClusters:\n" + str(clusters))
+    #print("\nClusters:\n" + str(clusters))
     print("\nNumClusters:", len(clusters))
     print("\nNumPerCluster:", [len(x) for x in clusters])
     evaluate_cluster(clusters)

@@ -26,6 +26,9 @@ class PreProcess:
         elif dataset == "water":
             print("Water Treatment Dataset")
             input = self.process_water()
+        elif dataset == "balance":
+            print("Balance Scale Dataset")
+            input = self.process_balance()
         else:
             print("Testing Dataset")
             input = self.process_fert()
@@ -33,7 +36,7 @@ class PreProcess:
 
     def process_abalone(self):
         input = []
-        with codecs.open('Data/original/abalone.csv', 'r', encoding='utf-8') as abl:
+        with codecs.open('Data/original/test5.csv', 'r', encoding='utf-8') as abl:
             csv_input = csv.reader(abl, delimiter=",")
             for row in csv_input:
                 example = []
@@ -103,8 +106,27 @@ class PreProcess:
                 input.append(example)
         return input
 
+    def process_balance(self):
+        input = []
+        with codecs.open('Data/original/test4.csv', 'r', encoding='utf-8') as water:
+            csv_input = csv.reader(water, delimiter=",")
+            for row in csv_input:
+                example = []
+                for element in range(len(row)):
+                    if element < len(row) - 1:
+                        if element > 0:
+                            if row[element] == "L":
+                                row[element] = 1
+                            elif row[element] == "R":
+                                row[element] = 2
+                            elif row[element] == "B":
+                                row[element] = 3
+                            example.append(float(row[element]))
+                input.append(example)
+        return input
 
-    def process_fert(self): #just for quick testing
+
+    def process_fert(self):
         input = []
         with codecs.open('Data/original/fertility.csv', 'r', encoding='utf-8') as fertility:
             csv_input = csv.reader(fertility, delimiter=",")

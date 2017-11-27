@@ -70,6 +70,20 @@ def flatten(p,n):              #flatten array
     for i in range(0, len(p), n):
         yield p[i:i + n]
 
+def rescaleVal(val, fromMinVal, fromMaxVal, toMinVal, toMaxVal):
+    '''Rescales a single value using each domain min and max values.'''
+    return (toMinVal * (1 - ((val - fromMinVal) / (fromMaxVal - fromMinVal)))) + (toMaxVal * ((val - fromMinVal) / (fromMaxVal - fromMinVal)))
+
+
+def rescaleArray(array, fromMinVal, fromMaxVal, toMinVal, toMaxVal):
+    '''Rescales an array using each domain min and max values.'''
+    return [rescaleVal(x, fromMinVal, fromMaxVal, toMinVal, toMaxVal) for x in array]
+
+
+def rescaleMatrix(matrix, fromMinVal, fromMaxVal, toMinVal, toMaxVal):
+    '''Rescales a matrix using each domain min and max values.'''
+    return [rescaleArray(x, fromMinVal, fromMaxVal, toMinVal, toMaxVal) for x in matrix]
+
 def pso(input, numClusters, iterations):
     """Takes in inputs, max number of clusters, and max iterations.
     Particles are created and move around the solution space.
@@ -79,6 +93,14 @@ def pso(input, numClusters, iterations):
     global bestPosition
     global bestFitness
     global ttl
+
+    minVal = 10000
+    maxVal = 0
+    for x in input:
+        for y in x:
+            minVal = min(minVal, y)
+            maxVal = max(maxVal, y)
+    inputs = rescaleMatrix(input, minVal, maxVal, 0, 1)
 
     clusterPairs = [[0 for x in range(len(input[0]))] for y in range(len(input))]       #some clusters initialized
     particles = []                                                                      #some particles initialized
@@ -97,10 +119,13 @@ def pso(input, numClusters, iterations):
             part.move()
             part.calc_velocity(i, iterations)
         ttl -= 1
-        if ttl == 0:   #system is static
-            break
+        #if ttl == 0:   #system is static
+         #   break
+    bestPosition = rescaleArray(bestPosition, 0, 1, minVal, maxVal)
+    clusterPairs = rescaleMatrix(clusterPairs, 0, 1, minVal, maxVal)
     clusters = [[] for x in range(numClusters)]
     for i in range(len(input)):
+        print(clusterPairs[i])
         clusters[(list(flatten(bestPosition, len(input[0])))).index(clusterPairs[i])].append(input[i])  #form clusters
 
     return[x for x in clusters if x != []]
