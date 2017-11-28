@@ -8,7 +8,7 @@ from Distance import euclidean
 
 def main():
     alg = "pso"        #clustering algorithm you wish to run
-    dataset = "abalone"  #data set you wish to cluster
+    dataset = "fertility"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
 
@@ -35,10 +35,10 @@ def main():
         print("Min Points: " + str(minPts))
         print("Threshold: " + str(threshold))
     elif alg == "cl":
+        print("Competitive Learning Neural Network")
         hiddenNodes = 150
         iterations = 10000
         learnRate = 0.001
-        print("Competitive Learning Neural Network")
         clusters = CL_NN.competitiveLearning(input, hiddenNodes, iterations, learnRate)
         print("hidden nodes: " + str(hiddenNodes))
         print("iterations: " + str(iterations))
@@ -54,8 +54,8 @@ def main():
         print("Particle Swarm Optimization")
         numClusters = 90    #one more cluster than CL produced  #abalone - 90, cmc - 149, epileptic - 126, census - 147, water - 127, balance - 103, fertility - 74, indian-99
         iterations = 50
-        print("iterations: " + str(iterations))
         clusters = PSO.pso(input, numClusters, iterations)
+        print("iterations: " + str(iterations))
         print("Max number of clusters: " + str(numClusters))
         print("iterations: " + str(iterations))
 

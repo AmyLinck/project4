@@ -4,115 +4,54 @@ import codecs
 """Takes in a string to tell which dataset csv file to pull from.
 Any categorical features are removed from the input vectors.
 All labels are stripped from the input vectors.
-Sets any missing data features to zero.
+Sets any missing data features to zero.  Indian liver
+and balance datasets have special functions to 
+handle categorical features and missing data.
 Returns a vector of input vectors back to the handler."""
 
 class PreProcess:
 
     def determine_dataset(self,dataset):
-        input = []
-        if dataset == "abalone":
-            print("Abalone Dataset")
-            input = self.process_abalone()
-        elif dataset == "cmc":
-            print("Contraceptive Method Choice Dataset")
-            input = self.process_cmc()
-        elif dataset == "epileptic":
-            print("Epileptic Seizure Dataset")
-            input = self.process_epileptic()
-        elif dataset == "census":
-            print("US Census 1990 Dataset")
-            input = self.process_census()
-        elif dataset == "water":
-            print("Water Treatment Dataset")
-            input = self.process_water()
-        elif dataset == "balance":
+        if dataset == "balance":
             print("Balance Scale Dataset")
             input = self.process_balance()
         elif dataset == "indian":
             print("Indian Liver Patient Dataset")
-            input = self.process_indian()
+            input = self.process_indian_liver()
         else:
-            print("Testing Dataset")
-            input = self.process_fert()
+            if dataset == 'abalone':
+                print("Abalone Dataset")
+                dataFile = 'abalone'
+            elif dataset == "cmc":
+                print("Contraceptive Method Choice Dataset")
+                dataFile = 'contraceptive_method_choice'
+            elif dataset == "fertility":
+                print("Fertility Dataset")
+                dataFile = 'fertility'
+            else:
+                print("Test Dataset")
+                dataFile = dataset
+            input = self.process_basic(dataFile)
+
         return input
 
-    def process_abalone(self):
+    def process_basic(self, dataFile):
         input = []
-        with codecs.open('Data/original/abalone.csv', 'r', encoding='utf-8') as abl:
-            csv_input = csv.reader(abl, delimiter=",")
+        with codecs.open('Data/original/' + dataFile + '.csv', 'r', encoding='utf-8') as file:
+            csv_input = csv.reader(file, delimiter=",")
             for row in csv_input:
                 example = []
                 for element in range(len(row)):
                     if element < len(row) - 1:
                         if element > 0:
-                            example.append(float(row[element]))
-                input.append(example)
-        return input
-
-    def process_cmc(self):
-        input = []
-        with codecs.open('Data/original/contraceptive_method_choice.csv', 'r', encoding='utf-8') as cmc:
-            csv_input = csv.reader(cmc, delimiter=",")
-            for row in csv_input:
-                example = []
-                for element in range(len(row)):
-                    if element < len(row) - 1:
-                        example.append(float(row[element]))
-                input.append(example)
-        return input
-
-    def process_epileptic(self):
-        input = []
-        with codecs.open('Data/original/epileptic.csv', 'r', encoding='utf-8') as epl:
-            csv_input = csv.reader(epl, delimiter=",")
-            index = 0
-            for row in csv_input:
-                example = []
-                if index > 0:
-                    for element in range(len(row)):
-                        if element < len(row) - 1:
-                            if element > 0:
-                                example.append(float(row[element]))
-                    input.append(example)
-                index = 1
-        return input
-
-    def process_census(self):
-        input = []
-        with codecs.open('Data/original/us_census_1990.csv', 'r', encoding='utf-8') as us:
-            csv_input = csv.reader(us, delimiter=",")
-            index = 0
-            for row in csv_input:
-                example = []
-                if index > 0:
-                    for element in range(len(row)):
-                        if element < len(row) - 1:
-                            if element > 0:
-                                example.append(float(row[element]))
-                    input.append(example)
-                index = 1
-        return input
-
-    def process_water(self):
-        input = []
-        with codecs.open('Data/original/water_treatment.csv', 'r', encoding='utf-8') as water:
-            csv_input = csv.reader(water, delimiter=",")
-            for row in csv_input:
-                example = []
-                for element in range(len(row)):
-                    if element < len(row) - 1:
-                        if element > 0:
-                            if row[element] == "?":
-                                row[element] = 0.0
                             example.append(float(row[element]))
                 input.append(example)
         return input
 
     def process_balance(self):
         input = []
-        with codecs.open('Data/original/balance.csv', 'r', encoding='utf-8') as water:
-            csv_input = csv.reader(water, delimiter=",")
+        with codecs.open('Data/original/balance.csv', 'r', encoding='utf-8') as file:
+            csv_input = csv.reader(file, delimiter=",")
             for row in csv_input:
                 example = []
                 for element in range(len(row)):
@@ -128,10 +67,10 @@ class PreProcess:
                 input.append(example)
         return input
 
-    def process_indian(self):
+    def process_indian_liver(self):
         input = []
-        with codecs.open('Data/original/indian_liver_patient.csv', 'r', encoding='utf-8') as indian:
-            csv_input = csv.reader(indian, delimiter=",")
+        with codecs.open('Data/original/indian_liver_patient.csv', 'r', encoding='utf-8') as file:
+            csv_input = csv.reader(file, delimiter=",")
             for row in csv_input:
                 example = []
                 for element in range(len(row)):
@@ -142,18 +81,5 @@ class PreProcess:
                             example.append(0)
                         else:
                             example.append(float(row[element]))
-                input.append(example)
-        return input
-
-
-    def process_fert(self):
-        input = []
-        with codecs.open('Data/original/fertility.csv', 'r', encoding='utf-8') as fertility:
-            csv_input = csv.reader(fertility, delimiter=",")
-            for row in csv_input:
-                example = []
-                for element in range(len(row)):
-                    if element < len(row) - 1:
-                        example.append(float(row[element]))
                 input.append(example)
         return input

@@ -88,7 +88,7 @@ def pso(input, numClusters, iterations):
 
     bestPosition = particles[0].position
     bestFitness = 10000
-    ttl = 10000
+    ttl = 10000        #time to live
 
     for i in range(iterations):                                                         #run until system is static or we reach max iterations
         print("Iteration: " + str(i))
@@ -104,4 +104,4 @@ def pso(input, numClusters, iterations):
     for i in range(len(input)):
         clusters[(list(flatten(bestPosition, len(input[0])))).index(clusterPairs[i])].append(input[i])  #form clusters
 
-    return[x for x in clusters if x != []]
+    return[x for x in clusters if x != []]  #return all non-empty clusters
