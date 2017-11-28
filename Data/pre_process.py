@@ -29,6 +29,9 @@ class PreProcess:
         elif dataset == "balance":
             print("Balance Scale Dataset")
             input = self.process_balance()
+        elif dataset == "indian":
+            print("Indian Liver Patient Dataset")
+            input = self.process_indian()
         else:
             print("Testing Dataset")
             input = self.process_fert()
@@ -36,7 +39,7 @@ class PreProcess:
 
     def process_abalone(self):
         input = []
-        with codecs.open('Data/original/test5.csv', 'r', encoding='utf-8') as abl:
+        with codecs.open('Data/original/abalone.csv', 'r', encoding='utf-8') as abl:
             csv_input = csv.reader(abl, delimiter=",")
             for row in csv_input:
                 example = []
@@ -108,7 +111,7 @@ class PreProcess:
 
     def process_balance(self):
         input = []
-        with codecs.open('Data/original/test4.csv', 'r', encoding='utf-8') as water:
+        with codecs.open('Data/original/balance.csv', 'r', encoding='utf-8') as water:
             csv_input = csv.reader(water, delimiter=",")
             for row in csv_input:
                 example = []
@@ -121,6 +124,23 @@ class PreProcess:
                                 row[element] = 2
                             elif row[element] == "B":
                                 row[element] = 3
+                            example.append(float(row[element]))
+                input.append(example)
+        return input
+
+    def process_indian(self):
+        input = []
+        with codecs.open('Data/original/indian_liver_patient.csv', 'r', encoding='utf-8') as indian:
+            csv_input = csv.reader(indian, delimiter=",")
+            for row in csv_input:
+                example = []
+                for element in range(len(row)):
+                    if element < len(row) - 1:
+                        if row[element] == "Male" or row[element] == "Female":
+                            pass
+                        elif row[element] == "":
+                            example.append(0)
+                        else:
                             example.append(float(row[element]))
                 input.append(example)
         return input
