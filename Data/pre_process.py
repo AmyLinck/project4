@@ -4,9 +4,9 @@ import codecs
 """Takes in a string to tell which dataset csv file to pull from.
 Any categorical features are removed from the input vectors.
 All labels are stripped from the input vectors.
-Sets any missing data features to zero.  Indian liver
-and balance datasets have special functions to 
-handle categorical features and missing data.
+Sets any missing data features to zero. The 
+Balance dataset has a special function to 
+handle a categorical feature.
 Returns a vector of input vectors back to the handler."""
 
 class PreProcess:
@@ -15,9 +15,6 @@ class PreProcess:
         if dataset == "balance":
             print("Balance Scale Dataset")
             input = self.process_balance()
-        elif dataset == "indian":
-            print("Indian Liver Patient Dataset")
-            input = self.process_indian_liver()
         else:
             if dataset == 'abalone':
                 print("Abalone Dataset")
@@ -28,6 +25,9 @@ class PreProcess:
             elif dataset == "fertility":
                 print("Fertility Dataset")
                 dataFile = 'fertility'
+            elif dataset == 'user':
+                print("User Knowledge Modeling Dataset")
+                dataFile = 'user_knowledge'
             else:
                 print("Test Dataset")
                 dataFile = dataset
@@ -67,19 +67,3 @@ class PreProcess:
                 input.append(example)
         return input
 
-    def process_indian_liver(self):
-        input = []
-        with codecs.open('Data/original/indian_liver_patient.csv', 'r', encoding='utf-8') as file:
-            csv_input = csv.reader(file, delimiter=",")
-            for row in csv_input:
-                example = []
-                for element in range(len(row)):
-                    if element < len(row) - 1:
-                        if row[element] == "Male" or row[element] == "Female":
-                            pass
-                        elif row[element] == "":
-                            example.append(0)
-                        else:
-                            example.append(float(row[element]))
-                input.append(example)
-        return input

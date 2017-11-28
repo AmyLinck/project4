@@ -7,14 +7,14 @@ from Distance import euclidean
    Cohesion and separation are calculated and printed out."""
 
 def main():
-    alg = "pso"        #clustering algorithm you wish to run
-    dataset = "fertility"  #data set you wish to cluster
+    alg = "km"        #clustering algorithm you wish to run
+    dataset = "user_knowledge"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
 
     if alg == "km":
         print("K-Means Clustering")
-        k = 90  #one more than CL formed, indian-99, abalone-90
+        k = 10  #one more than CL formed, indian-99, abalone-90, user-125
         clusters = []
         clusters_temp = K_Means.K_Means(input,k).get_clusters()
         for cluster in clusters_temp:
@@ -22,7 +22,7 @@ def main():
         print("K: " + str(k))
     elif alg == "db":
         print("DB-Scan")
-        minPts = 20   # 2 percent of the number of instances  #water-11, abalone-20, cmc-73, epileptic-10, census-20, balance - 5* fertility - 2, indian - 12
+        minPts = 6   # 2 percent of the number of instances  #water-11, abalone-20, cmc-73, epileptic-10, census-20, balance - 5* fertility - 2, indian - 12, user-6
         threshold = 0.1
         clusters_temp = DB_Scan.db_scan(input, minPts, threshold)
         clusters = []
@@ -52,7 +52,7 @@ def main():
         print("iterations: " + str(iterations))
     elif alg == "pso":
         print("Particle Swarm Optimization")
-        numClusters = 90    #one more cluster than CL produced  #abalone - 90, cmc - 149, epileptic - 126, census - 147, water - 127, balance - 103, fertility - 74, indian-99
+        numClusters = 2    #one more cluster than CL produced  #abalone - 90, cmc - 149, epileptic - 126, census - 147, water - 127, balance - 103, fertility - 74, indian-99
         iterations = 50
         clusters = PSO.pso(input, numClusters, iterations)
         print("iterations: " + str(iterations))

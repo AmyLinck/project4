@@ -102,6 +102,7 @@ def pso(input, numClusters, iterations):
 
     clusters = [[] for x in range(numClusters)]
     for i in range(len(input)):
-        clusters[(list(flatten(bestPosition, len(input[0])))).index(clusterPairs[i])].append(input[i])  #form clusters
+        if not all([v == 0 for v in clusterPairs[i]]):
+            clusters[(list(flatten(bestPosition, len(input[0])))).index(clusterPairs[i])].append(input[i])  #form clusters
 
     return[x for x in clusters if x != []]  #return all non-empty clusters
