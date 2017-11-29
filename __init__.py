@@ -7,8 +7,8 @@ from Distance import euclidean
    Cohesion and separation are calculated and printed out."""
 
 def main():
-    alg = "km"        #clustering algorithm you wish to run
-    dataset = "user_knowledge"  #data set you wish to cluster
+    alg = "db"        #clustering algorithm you wish to run
+    dataset = "cmc"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
 
@@ -22,7 +22,7 @@ def main():
         print("K: " + str(k))
     elif alg == "db":
         print("DB-Scan")
-        minPts = 6   # 2 percent of the number of instances  #water-11, abalone-20, cmc-73, epileptic-10, census-20, balance - 5* fertility - 2, indian - 12, user-6
+        minPts = 73   # 2 percent of the number of instances  #water-11, abalone-20, cmc-73, epileptic-10, census-20, balance - 5* fertility - 2, indian - 12, user-6
         threshold = 0.1
         clusters_temp = DB_Scan.db_scan(input, minPts, threshold)
         clusters = []
@@ -52,7 +52,7 @@ def main():
         print("iterations: " + str(iterations))
     elif alg == "pso":
         print("Particle Swarm Optimization")
-        numClusters = 2    #one more cluster than CL produced  #abalone - 90, cmc - 149, epileptic - 126, census - 147, water - 127, balance - 103, fertility - 74, indian-99
+        numClusters = 90    #one more cluster than CL produced  #abalone - 90, cmc - 149, epileptic - 126, census - 147, water - 127, balance - 103, fertility - 74, indian-99
         iterations = 50
         clusters = PSO.pso(input, numClusters, iterations)
         print("iterations: " + str(iterations))
@@ -63,6 +63,8 @@ def main():
     print("\nNumClusters:", len(clusters))
     print("\nNumPerCluster:", [len(x) for x in clusters])
     evaluate_cluster(clusters)
+    print("\nNumClusters:", len(clusters))
+    print("\nNumPerCluster:", [len(x) for x in clusters])
     print(dataset)
 
 def evaluate_cluster(clusters):    #calcualte cohesion and separation of the formed clusters
@@ -81,7 +83,6 @@ def cohesian(cluster):
     for x in cluster:
         for y in cluster:
             if x != y:
-                print(x)
                 cohesian += euclidean.get_euclidean_distance(x, y)
         if len(cluster) != 0:
             cohesian = cohesian / len(cluster)

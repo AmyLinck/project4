@@ -1,5 +1,5 @@
 /Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5 /Users/newfrontier2/Desktop/School/CSCI447/project_4/__init__.py
-Test Dataset
+Abalone Dataset
 Particle Swarm Optimization
 Iteration: 0
 Iteration: 1
@@ -55,13 +55,13 @@ iterations: 50
 Max number of clusters: 90
 iterations: 50
 
-NumClusters: 79
+NumClusters: 4
 
-NumPerCluster: [6, 9, 5, 2, 1, 9, 6, 4, 1, 1, 1, 1, 2, 7, 1, 4, 5, 1, 2, 1, 2, 5, 1, 1, 2, 1, 1, 3, 1, 5, 4, 4, 2, 4, 7, 1, 3, 4, 1, 1, 1, 3, 2, 3, 6, 1, 15, 1, 2, 2, 3, 3, 1, 2, 5, 2, 5, 2, 1, 10, 3, 1, 2, 3, 2, 1, 7, 2, 5, 2, 1, 5, 4, 5, 3, 1, 6, 11, 2]
+NumPerCluster: [298, 319, 369, 14]
 
-Cohesion: 9.863710216127386
+Cohesion: 1.574352810096309
 
-Seperation:  21237.893037637983
-user_knowledge
+Seperation:  267982.3313124206
+abalone
 
 Process finished with exit code 0

@@ -50,10 +50,8 @@ class K_Means:
             iteration += 1
         index = 1
         for i in clusters:
-            print(("Cluster " + str(index) + " has " + str(len(i.points)) + " data points with centroid " + str(i.centroid)))
-            print("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
             index += 1
-            #used for RBF
+            """used for RBF"""
             #if len(i.points) != 0:
             #    i.sigmoid = self.calculate_sigmoid(i)
             #if i.sigmoid != 0:
