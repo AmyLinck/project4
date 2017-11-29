@@ -8,13 +8,13 @@ from Distance import euclidean
 
 def main():
     alg = "db"        #clustering algorithm you wish to run
-    dataset = "cmc"  #data set you wish to cluster
+    dataset = "user"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
 
     if alg == "km":
         print("K-Means Clustering")
-        k = 10  #one more than CL formed, indian-99, abalone-90, user-125
+        k = 71  #one more than CL formed, abalone-29, balance-63, user-71, cmc-65, fertility-23
         clusters = []
         clusters_temp = K_Means.K_Means(input,k).get_clusters()
         for cluster in clusters_temp:
@@ -22,8 +22,8 @@ def main():
         print("K: " + str(k))
     elif alg == "db":
         print("DB-Scan")
-        minPts = 73   # 2 percent of the number of instances  #water-11, abalone-20, cmc-73, epileptic-10, census-20, balance - 5* fertility - 2, indian - 12, user-6
-        threshold = 0.1
+        minPts = 15  # 2 percent of the number of instances  # abalone-20, cmc-73,  balance - 5*,  fertility - 2, user-6
+        threshold = 0.2
         clusters_temp = DB_Scan.db_scan(input, minPts, threshold)
         clusters = []
         for c in clusters_temp:
@@ -36,8 +36,8 @@ def main():
         print("Threshold: " + str(threshold))
     elif alg == "cl":
         print("Competitive Learning Neural Network")
-        hiddenNodes = 150
-        iterations = 10000
+        hiddenNodes = 75
+        iterations = 100000
         learnRate = 0.001
         clusters = CL_NN.competitiveLearning(input, hiddenNodes, iterations, learnRate)
         print("hidden nodes: " + str(hiddenNodes))
@@ -52,19 +52,17 @@ def main():
         print("iterations: " + str(iterations))
     elif alg == "pso":
         print("Particle Swarm Optimization")
-        numClusters = 90    #one more cluster than CL produced  #abalone - 90, cmc - 149, epileptic - 126, census - 147, water - 127, balance - 103, fertility - 74, indian-99
-        iterations = 50
-        clusters = PSO.pso(input, numClusters, iterations)
+        numParticles = 10
+        numClusters = 65    #one more than CL formed, abalone-29, balance-63, user-71, cmc-65, fertility-23
+        iterations = 100
+        clusters = PSO.pso(input, numClusters, iterations, numParticles)
+        print("Number of Particles: " + str(numParticles))
         print("iterations: " + str(iterations))
         print("Max number of clusters: " + str(numClusters))
-        print("iterations: " + str(iterations))
 
-    #print("\nClusters:\n" + str(clusters))
     print("\nNumClusters:", len(clusters))
     print("\nNumPerCluster:", [len(x) for x in clusters])
     evaluate_cluster(clusters)
-    print("\nNumClusters:", len(clusters))
-    print("\nNumPerCluster:", [len(x) for x in clusters])
     print(dataset)
 
 def evaluate_cluster(clusters):    #calcualte cohesion and separation of the formed clusters

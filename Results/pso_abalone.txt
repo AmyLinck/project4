@@ -51,17 +51,67 @@ Iteration: 46
 Iteration: 47
 Iteration: 48
 Iteration: 49
-iterations: 50
-Max number of clusters: 90
-iterations: 50
+Iteration: 50
+Iteration: 51
+Iteration: 52
+Iteration: 53
+Iteration: 54
+Iteration: 55
+Iteration: 56
+Iteration: 57
+Iteration: 58
+Iteration: 59
+Iteration: 60
+Iteration: 61
+Iteration: 62
+Iteration: 63
+Iteration: 64
+Iteration: 65
+Iteration: 66
+Iteration: 67
+Iteration: 68
+Iteration: 69
+Iteration: 70
+Iteration: 71
+Iteration: 72
+Iteration: 73
+Iteration: 74
+Iteration: 75
+Iteration: 76
+Iteration: 77
+Iteration: 78
+Iteration: 79
+Iteration: 80
+Iteration: 81
+Iteration: 82
+Iteration: 83
+Iteration: 84
+Iteration: 85
+Iteration: 86
+Iteration: 87
+Iteration: 88
+Iteration: 89
+Iteration: 90
+Iteration: 91
+Iteration: 92
+Iteration: 93
+Iteration: 94
+Iteration: 95
+Iteration: 96
+Iteration: 97
+Iteration: 98
+Iteration: 99
+Number of Particles: 10
+iterations: 100
+Max number of clusters: 29
 
-NumClusters: 4
+NumClusters: 5
 
-NumPerCluster: [298, 319, 369, 14]
+NumPerCluster: [238, 5, 390, 359, 8]
 
-Cohesion: 1.574352810096309
+Cohesion: 2.0762827430367623
 
-Seperation:  267982.3313124206
+Seperation:  265900.8137783256
 abalone
 
 Process finished with exit code 0

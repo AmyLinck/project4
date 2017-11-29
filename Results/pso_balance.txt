@@ -1,7 +1,6 @@
 /Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5 /Users/newfrontier2/Desktop/School/CSCI447/project_4/__init__.py
 Balance Scale Dataset
 Particle Swarm Optimization
-iterations: 50
 Iteration: 0
 Iteration: 1
 Iteration: 2
@@ -52,16 +51,67 @@ Iteration: 46
 Iteration: 47
 Iteration: 48
 Iteration: 49
-Max number of clusters: 103
-iterations: 50
+Iteration: 50
+Iteration: 51
+Iteration: 52
+Iteration: 53
+Iteration: 54
+Iteration: 55
+Iteration: 56
+Iteration: 57
+Iteration: 58
+Iteration: 59
+Iteration: 60
+Iteration: 61
+Iteration: 62
+Iteration: 63
+Iteration: 64
+Iteration: 65
+Iteration: 66
+Iteration: 67
+Iteration: 68
+Iteration: 69
+Iteration: 70
+Iteration: 71
+Iteration: 72
+Iteration: 73
+Iteration: 74
+Iteration: 75
+Iteration: 76
+Iteration: 77
+Iteration: 78
+Iteration: 79
+Iteration: 80
+Iteration: 81
+Iteration: 82
+Iteration: 83
+Iteration: 84
+Iteration: 85
+Iteration: 86
+Iteration: 87
+Iteration: 88
+Iteration: 89
+Iteration: 90
+Iteration: 91
+Iteration: 92
+Iteration: 93
+Iteration: 94
+Iteration: 95
+Iteration: 96
+Iteration: 97
+Iteration: 98
+Iteration: 99
+Number of Particles: 10
+iterations: 100
+Max number of clusters: 63
 
-NumClusters: 27
+NumClusters: 12
 
-NumPerCluster: [20, 45, 40, 5, 30, 50, 25, 5, 25, 35, 25, 30, 5, 35, 15, 15, 30, 30, 25, 30, 10, 5, 5, 25, 20, 20, 20]
+NumPerCluster: [45, 40, 85, 115, 85, 5, 100, 90, 40, 10, 5, 5]
 
-Cohesion: 23.87057542518105
+Cohesion: 15.099624435559162
 
-Seperation:  623167.643173485
+Seperation:  590197.2979590079
 balance
 
 Process finished with exit code 0

@@ -1,18 +1,20 @@
 /Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5 /Users/newfrontier2/Desktop/School/CSCI447/project_4/__init__.py
-Testing Dataset
+Fertility Dataset
 K-Means Clustering
 Iteration 0
 Iteration 1
 Iteration 2
-K: 74
+Iteration 3
+Iteration 4
+K: 23
 
-NumClusters: 74
+NumClusters: 23
 
-NumPerCluster: [1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 2, 2, 1, 1, 3, 1, 1, 1, 1, 1, 0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 3, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 4, 1, 1, 1]
+NumPerCluster: [8, 1, 3, 2, 4, 5, 8, 2, 4, 4, 1, 2, 1, 7, 5, 3, 5, 1, 8, 5, 5, 5, 11]
 
-Cohesion: 10.489559222300255
+Cohesion: 10.667317082846665
 
-Seperation:  10235.614038392725
-fert
+Seperation:  8472.754755913476
+fertility
 
 Process finished with exit code 0

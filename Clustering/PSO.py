@@ -70,7 +70,7 @@ def flatten(p,n):              #flatten array
     for i in range(0, len(p), n):
         yield p[i:i + n]
 
-def pso(input, numClusters, iterations):
+def pso(input, numClusters, iterations, numParticles):
     """Takes in inputs, max number of clusters, and max iterations.
     Particles are created and move around the solution space.
     Once particle movement has stopeed or max iterations is reached, return clusters."""
@@ -83,7 +83,7 @@ def pso(input, numClusters, iterations):
     clusterPairs = [[0 for x in range(len(input[0]))] for y in range(len(input))]       #some clusters initialized
     particles = []                                                                      #some particles initialized
     inputs = input
-    for i in range(len(inputs) * 3):                                                    #number of particles equals 3 times the number of inputs
+    for i in range(numParticles):                                                    #number of particles equals 3 times the number of inputs
         particles.append(particle(len(input[0]),numClusters))
 
     bestPosition = particles[0].position
