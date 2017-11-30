@@ -1,0 +1,14 @@
+Fertility Dataset
+Ant Colony Optimization
+
+number of ants: 50
+iterations: 100000
+
+NumClusters: 32
+
+NumPerCluster: [1, 9, 7, 3, 2, 2, 6, 5, 3, 4, 1, 4, 6, 4, 1, 1, 1, 2, 3, 1, 5, 4, 4, 6, 5, 2, 2, 2, 1, 1, 1, 1]
+
+Cohesion: 14.009931641411061
+
+Seperation:  8540.980582262964
+

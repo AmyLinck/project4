@@ -1,17 +1,8 @@
-/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5 /Users/newfrontier2/Desktop/School/CSCI447/project_4/__init__.py
 Contraceptive Method Choice Dataset
 K-Means Clustering
-Iteration 0
-Iteration 1
-Iteration 2
-Iteration 3
-Iteration 4
-Iteration 5
-Iteration 6
-Iteration 7
-Iteration 8
-Iteration 9
+
 K: 65
+iterations: 10
 
 NumClusters: 65
 
@@ -20,6 +11,3 @@ NumPerCluster: [40, 44, 15, 27, 21, 24, 16, 40, 27, 20, 18, 19, 10, 31, 26, 35, 
 Cohesion: 95.62879847499791
 
 Seperation:  4149593.185830631
-cmc
-
-Process finished with exit code 0

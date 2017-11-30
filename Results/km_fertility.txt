@@ -1,12 +1,8 @@
-/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5 /Users/newfrontier2/Desktop/School/CSCI447/project_4/__init__.py
 Fertility Dataset
 K-Means Clustering
-Iteration 0
-Iteration 1
-Iteration 2
-Iteration 3
-Iteration 4
+
 K: 23
+iterations: 5
 
 NumClusters: 23
 
@@ -15,6 +11,3 @@ NumPerCluster: [8, 1, 3, 2, 4, 5, 8, 2, 4, 4, 1, 2, 1, 7, 5, 3, 5, 1, 8, 5, 5, 5
 Cohesion: 10.667317082846665
 
 Seperation:  8472.754755913476
-fertility
-
-Process finished with exit code 0

@@ -1,18 +1,8 @@
-/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5 /Users/newfrontier2/Desktop/School/CSCI447/project_4/__init__.py
 Abalone Dataset
 K-Means Clustering
-Iteration 0
-Iteration 1
-Iteration 2
-Iteration 3
-Iteration 4
-Iteration 5
-Iteration 6
-Iteration 7
-Iteration 8
-Iteration 9
-Iteration 10
+
 K: 29
+iterations: 11
 
 NumClusters: 29
 
@@ -21,6 +11,3 @@ NumPerCluster: [35, 30, 35, 32, 60, 35, 48, 24, 29, 7, 51, 31, 48, 51, 41, 28, 3
 Cohesion: 3.326887533515746
 
 Seperation:  308113.378412058
-abalone
-
-Process finished with exit code 0

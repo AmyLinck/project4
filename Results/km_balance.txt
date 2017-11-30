@@ -1,11 +1,8 @@
-/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5 /Users/newfrontier2/Desktop/School/CSCI447/project_4/__init__.py
 Balance Scale Dataset
 K-Means Clustering
-Iteration 0
-Iteration 1
-Iteration 2
-Iteration 3
+
 K: 63
+iterations: 4
 
 NumClusters: 63
 
@@ -14,6 +11,3 @@ NumPerCluster: [10, 15, 10, 20, 5, 5, 10, 10, 15, 15, 15, 10, 5, 15, 10, 5, 20, 
 Cohesion: 28.964657268057493
 
 Seperation:  630799.470751885
-balance
-
-Process finished with exit code 0

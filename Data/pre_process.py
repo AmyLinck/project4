@@ -11,7 +11,7 @@ Returns a vector of input vectors back to the handler."""
 
 class PreProcess:
 
-    def determine_dataset(self,dataset):
+    def determine_dataset(self,dataset):    #taken in from handler
         if dataset == "balance":
             print("Balance Scale Dataset")
             input = self.process_balance()
@@ -29,13 +29,14 @@ class PreProcess:
                 print("User Knowledge Modeling Dataset")
                 dataFile = 'user_knowledge'
             else:
-                print("Test Dataset")
+                print("Test Dataset")     #if there's another dataset you want to test
                 dataFile = dataset
             input = self.process_basic(dataFile)
 
-        return input
+        return input                      #return the processed input vectors back to the handler
 
     def process_basic(self, dataFile):
+        "Remove labels and process all the datasets except for the balance dataset."
         input = []
         with codecs.open('Data/original/' + dataFile + '.csv', 'r', encoding='utf-8') as file:
             csv_input = csv.reader(file, delimiter=",")
@@ -49,6 +50,7 @@ class PreProcess:
         return input
 
     def process_balance(self):
+        """Remove labels and vectorize categorical features for the balance dataset."""
         input = []
         with codecs.open('Data/original/balance.csv', 'r', encoding='utf-8') as file:
             csv_input = csv.reader(file, delimiter=",")
