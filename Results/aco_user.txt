@@ -1,5 +1,5 @@
 User Knowledge Modeling Dataset
-Any Colony Optimization
+Any-Colony Optimization
 
 number of ants: 50
 iterations: 258000

@@ -1,5 +1,5 @@
 Abalone Dataset
-Ant Colony Optimization
+Ant-Colony Optimization
 
 number of ants: 50
 iterations: 1000000

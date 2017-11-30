@@ -7,8 +7,8 @@ from Distance import euclidean
    Cohesion and separation are calculated for the cluster set and printed out."""
 
 def main():
-    alg = "aco"        #clustering algorithm you wish to run
-    dataset = "abalone"  #data set you wish to cluster
+    alg = "pso"        #clustering algorithm you wish to run
+    dataset = "fertility"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
 
@@ -37,7 +37,7 @@ def main():
     elif alg == "cl":
         print("Competitive Learning Neural Network")
         hiddenNodes = 75
-        iterations = 100000
+        iterations = 1000
         learnRate = 0.001
         clusters = CL_NN.competitiveLearning(input, hiddenNodes, iterations, learnRate)
         print("hidden nodes: " + str(hiddenNodes))
@@ -46,7 +46,7 @@ def main():
     elif alg == "aco":
         print("Ant-Colony Optimization")
         ants = 50
-        iterations = 1000
+        iterations = 10
         clusters = ACO.aco(input, ants, iterations)
         print("number of ants: " + str(ants))
         print("iterations: " + str(iterations * len(input)))
@@ -54,7 +54,7 @@ def main():
         print("Particle Swarm Optimization")
         numParticles = 10
         numClusters = 23    #one more than CL formed, abalone-29, balance-63, user-71, cmc-65, fertility-23
-        iterations = 100
+        iterations = 50
         clusters = PSO.pso(input, numClusters, iterations, numParticles)
         print("Number of Particles: " + str(numParticles))
         print("iterations: " + str(iterations))
