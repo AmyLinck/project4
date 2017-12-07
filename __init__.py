@@ -7,7 +7,7 @@ from Distance import euclidean
    Cohesion and separation are calculated for the cluster set and printed out."""
 
 def main():
-    alg = "pso"        #clustering algorithm you wish to run
+    alg = "cl"        #clustering algorithm you wish to run
     dataset = "fertility"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
@@ -23,7 +23,7 @@ def main():
     elif alg == "db":
         print("DB-Scan")
         minPts = 2 # 2 percent of the number of instances  # abalone-20, cmc-73,  balance - 5*,  fertility - 2, user-6
-        threshold = 0.1
+        threshold = 0.07
         clusters_temp = DB_Scan.db_scan(input, minPts, threshold)
         clusters = []
         for c in clusters_temp:
@@ -37,7 +37,7 @@ def main():
     elif alg == "cl":
         print("Competitive Learning Neural Network")
         hiddenNodes = 75
-        iterations = 1000
+        iterations = 100000
         learnRate = 0.001
         clusters = CL_NN.competitiveLearning(input, hiddenNodes, iterations, learnRate)
         print("hidden nodes: " + str(hiddenNodes))
@@ -46,7 +46,7 @@ def main():
     elif alg == "aco":
         print("Ant-Colony Optimization")
         ants = 50
-        iterations = 10
+        iterations = 1000
         clusters = ACO.aco(input, ants, iterations)
         print("number of ants: " + str(ants))
         print("iterations: " + str(iterations * len(input)))
@@ -54,11 +54,15 @@ def main():
         print("Particle Swarm Optimization")
         numParticles = 10
         numClusters = 23    #one more than CL formed, abalone-29, balance-63, user-71, cmc-65, fertility-23
-        iterations = 50
+        iterations = 100
         clusters = PSO.pso(input, numClusters, iterations, numParticles)
         print("Number of Particles: " + str(numParticles))
         print("iterations: " + str(iterations))
         print("Max number of clusters: " + str(numClusters))
+
+    print("\nClusters:")
+    for cluster in clusters:
+        print("\n" + str(cluster))
 
     print("\nNumClusters:", len(clusters))
     print("\nNumPerCluster:", [len(x) for x in clusters])
