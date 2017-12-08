@@ -1,0 +1,14 @@
+Balance Scale Dataset
+Particle Swarm Optimization
+
+Number of Particles: 10
+iterations: 100
+Max number of clusters: 63
+
+NumClusters: 12
+
+NumPerCluster: [45, 40, 85, 115, 85, 5, 100, 90, 40, 10, 5, 5]
+
+Cohesion: 15.099624435559162
+
+Seperation:  590197.2979590079

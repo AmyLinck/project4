@@ -1,0 +1,14 @@
+Abalone Dataset
+Competitive Learning Neural Network
+
+hidden nodes: 75
+iterations: 100000
+learning rate: 0.001
+
+NumClusters: 28
+
+NumPerCluster: [45, 3, 78, 36, 68, 27, 29, 19, 15, 64, 47, 4, 42, 1, 1, 35, 110, 2, 24, 5, 7, 38, 89, 3, 48, 105, 38, 17]
+
+Cohesion: 4.392811137914865
+
+Seperation:  305524.2634576281

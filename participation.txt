@@ -1,0 +1,30 @@
+The work load of the project was divided up in the following way:
+
+Design Document - All (Amy as the lead)
+
+__init__.py - Amy, Na'Shea
+
+euclidean.py - Amy
+
+pre_process.py - Na'Shea
+
+K_Means.py - Na'Shea
+
+CL_NN.py - Amy
+
+DB_Scan.py - Na'Shea
+
+PSO.py - Na'Shea
+
+ACO.py - Na'Shea
+
+Testing and Screencast - Na'Shea
+
+Report - All (Amy as the lead)
+
+Taylor's baby was born right when this project was assigned and therefore
+was tied up for the most part (understandably).  He contributed to the report
+but has helped us greatly in the proceeding projects!  We just wanted to let
+you know why he didn't contribute as much this time.  He has been a great
+asset to the group this semester!
+

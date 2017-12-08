@@ -1,0 +1,14 @@
+Contraceptive Method Choice Dataset
+Particle Swarm Optimization
+
+Number of Particles: 10
+iterations: 100
+Max number of clusters: 65
+
+NumClusters: 4
+
+NumPerCluster: [13, 1444, 2, 1]
+
+Cohesion: 11.226727159446083
+
+Seperation:  134097.85734139566
