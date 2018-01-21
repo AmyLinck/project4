@@ -95,7 +95,7 @@ def cohesian(cluster):
     cohesian = 0
     for x in cluster:
         for y in cluster:
-            if x != y:
+            if x.all() != y.all():
                 cohesian += euclidean.get_euclidean_distance(x, y)
         if len(cluster) != 0:
             cohesian = cohesian / len(cluster)

@@ -38,7 +38,7 @@ class PreProcess:
     def process_basic(self, dataFile):
         "Remove labels and process all the datasets except for the balance dataset."
         input = []
-        with codecs.open('Data/original/' + dataFile + '.csv', 'r', encoding='utf-8') as file:
+        with codecs.open('code/Data/original/' + dataFile + '.csv', 'r', encoding='utf-8') as file:
             csv_input = csv.reader(file, delimiter=",")
             for row in csv_input:
                 example = []
@@ -52,7 +52,7 @@ class PreProcess:
     def process_balance(self):
         """Remove labels and vectorize categorical features for the balance dataset."""
         input = []
-        with codecs.open('Data/original/balance.csv', 'r', encoding='utf-8') as file:
+        with codecs.open('code/Data/original/balance.csv', 'r', encoding='utf-8') as file:
             csv_input = csv.reader(file, delimiter=",")
             for row in csv_input:
                 example = []

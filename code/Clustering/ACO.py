@@ -143,7 +143,7 @@ class ACO:
         # LOCAL SEARCH
         top_20 = self.no_ants/10 * 2
         for i in range(int(top_20)):
-            for c, cluster in enumerate(sorted_ant_sol[i]):
+            for c, cluster in enumerate(sorted_ant_sol[i][:-1]):
                 rand = random.random()
                 if rand < probability:
                     allowed_values = list(range(0, self.no_clusters))
