@@ -1,247 +1,170 @@
+import numpy as np
 import random
-import math
-import copy
 from code.Distance.euclidean import *
 
 """Takes in input data, number of ants, and number of iterations.  Data is placed
 in a 2D space randomly.  The size of the space is directly related to the number of input vectors.  
 This allows for a healthy amount of density in the space throughout the execution of the algorithm.
 Ants move around the space picking up and dropping pheremones and then die.
-Returns formed clusters by the ants."""
+Returns formed clusters by the ants.
 
-class ant(object):
-    """Class ant has a location in the 2D search space.  The ant explores the space
-    with all the other ants.  Each and has a short term memory that tracks the
-    fitness of the current pheremone in each location it was dropped.  This allows
-    the ant to strive for better pheromone placement."""
+An ant constructs a solution by assigning a data
+point to a cluster. The desirability of assigning a data point to a
+cluster is represented by the amount of pheromone. Ants update
+the pheromone in an amount proportionalto the objective function
+value of the solution they generate."""
 
-    def __init__(self,step):
-        """Initialize the ant at a random location on the 2D search
-        space and let it move around by the size of the step."""
-        global inputs
-        global maxDims
+class ACO:
 
-        self.loc = [random.randint(0, maxDims), random.randint(0, maxDims)]
-        self.curValue = None       #pheremone value
-        self.curDensity = 10000
-        self.stepSize = 1
-        self.bad = 0.0
-        self.activity = random.random()   #how eager the ant is
-        self.totals = 0.0
+    def __init__(self,data, max_iter, evaporation_rate, no_ants, no_clusters):
+        self.data = np.array(data, dtype=float)
+        self.no_ants = no_ants
+        self.no_clusters = no_clusters
+        self.max_iter = max_iter
+        self.evaporation_rate = evaporation_rate
+        self.current_best_solution = []
+        self.pheromone_matrix = np.zeros(shape=( len(data), no_clusters))
+        self.fitness_goal = 0.2
 
-    def advance(self, maxDimension):
-        """If ant is not holding a pheremone, try to pick one up.
-        If ant is holding a pheremone, try to drop it.
-        If the ant did not pick up or drop any pheremones, move
-        the ant by the step size."""
-        if self.curValue == None:
-            self.pickUp(maxDimension)
-            if self.curValue == None:
-                for s in range(self.stepSize):
-                    self.move()
-        elif self.curValue != None:
-            self.drop(maxDimension)
-            if self.curValue != None:
-                for s in range(self.stepSize):
-                    self.move()
+    """
+       Helper methods
+    """
+    def initialize_matrix(self):
+        for i in range(len(self.data)):
+            for j in range(self.no_clusters):
+                self.pheromone_matrix[i][j] = random.random()
 
-    def update(self):
-        """Determines the activity of the ant based on how well it has done."""
-        if self.totals > 0:
-            if self.bad / self.totals > 0.75:
-                self.activity += 0.01
-                self.bad = 0
-                self.totals = 0
-            else:
-                self.activity -= 0.01
-                self.bad = 0
-                self.totals = 0
+    def normalize_pheromone(self, data_index, cluster_number):
+        sum_pheromones = 0
+        for i in range(self.no_clusters):
+            sum_pheromones = sum_pheromones + self.pheromone_matrix[data_index][i]
 
-    def pickUp(self, maxDimension):
-        """Determine how well a pheremone fits in the ant's current location.
-        If it doesn't fit well, ant will pick it up to place somewhere else with
-        probability pick_up_prob."""
-        global inputs
-        global inputLocs
-        if self.loc in inputLocs and self.curValue == None:
-            fitness = calculate_fitness(self, maxDimension)
-            pick_up_prob = 1 if fitness <= 1 else 1 / (fitness**2)
-            if random.random() < pick_up_prob:
-                self.curValue = copy.deepcopy(inputs[inputLocs.index(self.loc)])
-                self.curDensity = copy.deepcopy(fitness)
-                del inputs[inputLocs.index(self.loc)]
-                inputLocs.remove(self.loc)
+        return self.pheromone_matrix[data_index][cluster_number] / sum_pheromones
 
-    def drop(self, maxDimension):
-        """Determine quality of the current location for dropping a pheremone.
-        If location is of good quality, drop the pheremone with probability
-        drop_prop (based on the fitness)."""
-        global inputs
-        global inputLocs
-        if self.loc not in inputLocs and self.curValue != None:            #Valid location to drop a pheremone
-                                                                           #i.e. ant has pheremone and location does not
-            fitness = calculate_fitness(self,maxDimension, self.curValue)
-            drop_prob = 1 if fitness >= 1 else fitness**4
-            if random.random() < drop_prob:
-                self.totals += 1
-                if self.curDensity < fitness:
-                    self.bad += 1
-                inputs.append(copy.deepcopy(self.curValue))
-                inputLocs.append(copy.deepcopy(self.loc))
-                self.curValue = None     #drop it
-                self.curDensity = None
-
-    def move(self):
-        """Move the ant in a random direction and ensure the ant remains
-        in the search space."""
-        global inputs
-        global maxDims
-        direction = random.randint(0,len(self.loc) - 1)
-        self.loc[direction] = (self.loc[direction] + random.choice([-1,1])) % (maxDims + 1)
-
-    def die(self):
-        """At the end of each ant's life, the ant will explore the search space to
-        determine where to place the current pheremone it is holding.  The
-        pheremone is then dropped there and the ant dies."""
-        global inputs
-        global inputLocs
-        global maxDims
-        bestFitness = 0
-        bestLocation = []
-        if self.curValue != None:        #A better location exists
-            for x in range(maxDims + 1):
-                for y in range(maxDims + 1):
-                    testLocation = [x,y]
-                    if testLocation not in inputLocs:
-                        self.loc = testLocation
-                        fitness = calculate_fitness(self,1,self.curValue)
-                        if fitness > bestFitness:
-                            bestFitness = fitness
-                            bestLocation = [x,y]
-            if bestFitness == 0:         #Optimal location doesn't exist, but find the best one
-                bestFitness = 1000
-                for x in range(maxDims + 1):
-                    for y in range(maxDims + 1):
-                        testLocation = [x, y]
-                        if testLocation not in inputLocs:
-                            difference = 0
-                            for w in range(-5,6):
-                                for z in range(-5, 6):
-                                    testPosition = copy.deepcopy(testLocation)
-                                    testPosition[0] = int((testLocation[0] + w) % (maxDims + 1))
-                                    testPosition[1] = int((testLocation[1] + z) % (maxDims + 1))
-                                    if testPosition in inputLocs:
-                                        difference += get_euclidean_distance(self.curValue, inputs[inputLocs.index(testPosition)])
-                            if difference < bestFitness:
-                                bestFitness = difference
-                                bestLocation = [x,y]
-            inputs.append(copy.deepcopy(self.curValue))
-            inputLocs.append(copy.deepcopy(bestLocation))
-            self.curValue = None         #kill ant
-            self.curDensity = None
-
-
-def calculate_fitness(object, maxDimension, value = None):
-    """Calculates the fitness of an ant according to location, memory, and actions.
-    Euclidean distance is used to determine intra-ant similarity.  Punish ants for
-    bad behavior by setting fitness to 0."""
-    global inputs
-    global inputLocs
-    global maxDims
-    fitness = 0
-    test = copy.deepcopy(object.loc)
-    for x in range(-maxDimension, maxDimension + 1):     #iterate through search space
-        for y in range(-maxDimension, maxDimension + 1):
-            test[0] = int((object.loc[0] + x) % (maxDims + 1))
-            test[1] = int((object.loc[1] + y) % (maxDims + 1))
-            if test in inputLocs and value == None:
-                test_fitness = 1 - ((get_euclidean_distance(inputs[inputLocs.index(test)], inputs[inputLocs.index(object.loc)])) / object.activity)
-                if test_fitness <= 0:         #Set fitness to 0 if fitness ever becomes negative
-                    return 0
+    def calc_weight_matrix(self, solution_string):
+        print("start weight matrix")
+        weight_matrix = np.zeros(shape=(len(self.data), self.no_clusters))
+        for i in range(len(self.data)):
+            for j in range(self.no_clusters):
+                if (solution_string[i] == j):
+                    weight_matrix[i][j] = 1
                 else:
-                    fitness += test_fitness
-            elif test in inputLocs and value != None:
-                test_fitness = 1 - ((get_euclidean_distance(inputs[inputLocs.index(test)], value)) / object.activity)
-                if test_fitness <= 0:         #Set fitness to 0 if fitness ever becomes negative
-                    return 0
-                else:
-                    fitness += test_fitness
-    if fitness <= 0:                          #Set zero as the minimum value for fitness
-        return 0
-    else:
+                    weight_matrix[i][j] = 0
+        print("end weight matrix calculated")
+        return weight_matrix
+
+    def calc_cluster_center(self, weight_matrix):
+        print("start cluster centers")
+        sum_weights = 0
+        sum_attributes = 0
+        division = 0
+        cluster_center_matrix = np.zeros(shape=(self.no_clusters, len(self.data[0])))
+        for v, attr in enumerate(self.data[0]):
+            for c in range(self.no_clusters):
+                for i, datapoint in enumerate(self.data):
+                    sum_weights = sum_weights + weight_matrix[i][c]
+                    sum_attributes = sum_attributes + weight_matrix[i][c]*self.data[i][v]
+                cluster_center_matrix[c][v] = sum_attributes / sum_weights
+        print("end cluster centers")
+        return cluster_center_matrix
+
+    def calc_fitness(self, weight_matrix):
+        cluster_matrix = self.calc_cluster_center(weight_matrix)
+        print("start fitness calc")
+        fitness = 0
+        for j in range(self.no_clusters):
+            for i, datapoint in enumerate(self.data):
+                for v, attr in enumerate(self.data[0]):
+                    cluster_center = cluster_matrix[j][v]
+                    fitness = fitness + weight_matrix[i][j] * pow((attr - cluster_center), 2)
+        print("end fitness calc")
         return fitness
 
-def calc_near_clusters(position):
-    """Used to find the clusters in the 2D space using an adjacency exploration technique."""
-    global cluster
-    global clusters
-    global maxDims
-    global inputLocs
-    check = [position]
-    while len(check) > 0:
-        val = check.pop()
-        for x in range(-1,2):
-            for y in range(-1,2):
-                test_position = copy.deepcopy(val)
-                test_position[0] = int((val[0] + x) % (maxDims + 1))
-                test_position[1] = int((val[1] + y) % (maxDims + 1))
-                if test_position in inputLocs and test_position not in cluster and test_position not in clusters:
-                    cluster.append(test_position)
-                    check.append(test_position)
-    for c in cluster:
-        clusters.append(c)
-    cluster = []
+
+    """
+    Main methods
+    """
+
+    def run(self):
+        i = 0
+        while (i<self.max_iter):
+            print("iteration: ", i)
+            self.clustering()
+            i = i + 1
+            if (self.current_best_solution[-1]>self.fitness_goal):
+                break
+
+    def calculate_clusters(self):
+        clusters = []
+        for c in range(self.no_clusters):
+            clusters.append([])
+        for i, cluster in enumerate(self.current_best_solution[:-1]):
+            print("cluster", cluster)
+            clusters[int(cluster-1)].append(self.data[i])
+        return clusters
+
+    def clustering(self):
+        self.initialize_matrix()
+        probability_threshold = 0.98
+        probability = 1 - probability_threshold
+
+        # GENERATE SOLUTIONS!
+        ant_solutions = np.zeros(shape=(self.no_ants, len(self.data)+1))
+        for a in range(self.no_ants):
+            for i, dp in enumerate(self.data):
+                rand = random.random()
+                if (rand < probability_threshold):
+                    cluster = np.argmax(self.pheromone_matrix[i])
+                    ant_solutions[a][i] = cluster
+                else:
+                    normalized_clusters = []
+                    norm_cluster_val = 0
+                    for k in range(self.no_clusters):
+                        norm_cluster_val = norm_cluster_val + self.normalize_pheromone(i, k)
+                        normalized_clusters.append(norm_cluster_val)
+                    rand2 = random.random()
+                    for c,val in enumerate(normalized_clusters):
+                        if rand2 < val:
+                            ant_solutions[a][i] = c
+
+        #   CALCULATE FITNESS
+        for i,s in enumerate(ant_solutions):
+            weight_matrix = self.calc_weight_matrix(s)
+            fitness = self.calc_fitness(weight_matrix)
+            ant_solutions[i][-1] = (fitness)
+            print("ant solution: ", ant_solutions[i])
+            print("fitness: ", fitness)
+
+        #ant_solutions = np.array(ant_solutions)
+        print(ant_solutions)
+        sorted_ant_sol = ant_solutions[ant_solutions[:,-1].argsort()]
+        print(sorted_ant_sol)
+
+        # LOCAL SEARCH
+        top_20 = self.no_ants/10 * 2
+        for i in range(int(top_20)):
+            for c, cluster in enumerate(sorted_ant_sol[i]):
+                rand = random.random()
+                if rand < probability:
+                    allowed_values = list(range(0, self.no_clusters))
+                    allowed_values.remove(int(cluster))
+                    sorted_ant_sol[i][c] = random.choice(allowed_values)
+            weight_matrix = self.calc_weight_matrix(sorted_ant_sol[i])
+            fitness = self.calc_fitness(weight_matrix)
+            if sorted_ant_sol[i][-1] > fitness:
+                sorted_ant_sol[i][-1] = fitness
+        sorted_ant_sol = sorted_ant_sol[sorted_ant_sol[:,-1].argsort()]
+        self.current_best_solution = sorted_ant_sol[0]
 
 
-def aco(data, ants, iterations):
-    """Takes in input data, number of ants, and number of iterations.  Data is placed
-    in a 2D space randomly.  The size of the space is directly related to the number of input vectors.
-    This allows for a healthy amount of density in the space throughout the execution of the algorithm.
-    Ants move around the space picking up and dropping pheromones and then die.
-    Returns formed clusters by the ants."""
-    global inputs
-    global maxDims
-    global inputLocs
-    global cluster
-    global clusters
-    cluster = []
-    clusters = []
+        # PHEROMONE UPDATE
+        persistence = 0.01
+        for i, row in enumerate(self.pheromone_matrix):    #datapoints? = rows ?
+            for j,pheromone  in enumerate(self.pheromone_matrix[i]): #clusters? = columns?
+                delta_pheromone = 0
+                for l in range(int(top_20)):
+                    if ant_solutions[l][i] == j:               # CHECK IF CLUSTER FOR POINT I IN SOLUTION EQUALS CURRENT CLUSTER j
+                      delta_pheromone = 1 / ant_solutions[l][-1]
+                self.pheromone_matrix[i][j] = (1 - persistence) * self.pheromone_matrix[i][j] + delta_pheromone
 
-    inputs = data
-    iterCounter = len(data) * iterations
-    maxDims = int(math.sqrt(10 * len(inputs)) + 0.5)                          #initialize the size of the search space
-    inputLocs = []
 
-    for i in inputs:                                                          #initialize a random location for every input
-        position = [random.randint(0, maxDims),random.randint(0, maxDims)]
-        while position in inputLocs:
-            position = [random.randint(0, maxDims),random.randint(0, maxDims)]
-        inputLocs.append(position)
-
-    antPopulation = []
-    for a in range(ants):
-        antPopulation.append(ant(int(math.sqrt(2 * maxDims))))
-    for iter in range(iterCounter):                                           #initialize ants and let them move around the search space
-        print("Iteration: " + str(iter))
-        for a in antPopulation:
-            a.advance(int(((iter * 5) / iterCounter) + 1))
-        if iter % 100 == 0:
-            for a in antPopulation:
-                a.update()
-    for a in antPopulation:                                                   #kill the ants
-        a.die()
-
-    for position in inputLocs:
-        calc_near_clusters(position)                                          #find the nearby clusters using adjacency exploration technique
-        if clusters[-1] != None:
-           clusters.append(None)
-
-    finalClusters = []
-    temp_array = []
-    for c in clusters:
-        if c != None:
-            temp_array.append(data[inputLocs.index(c)])
-        elif c == None:
-            finalClusters.append(temp_array)
-            temp_array = []
-    return finalClusters                                                     #return the clusters formed by the ants

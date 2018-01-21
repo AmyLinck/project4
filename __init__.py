@@ -7,7 +7,7 @@ from code.Distance import euclidean
    Cohesion and separation are calculated for the cluster set and printed out."""
 
 def main():
-    alg = "cl"        #clustering algorithm you wish to run
+    alg = "aco"        #clustering algorithm you wish to run
     dataset = "balance"  #data set you wish to cluster
 
     input = PreProcess().determine_dataset(dataset)    #preprocess the dataset and return vector of input vectors
@@ -36,20 +36,24 @@ def main():
         print("Threshold: " + str(threshold))
     elif alg == "cl":
         print("Competitive Learning Neural Network")
-        clusters = 75
+        clusters_nr = 75
         iterations = 10000
         learnRate = 0.001
-        CLNN = CL_NN.competitiveLearning(input, clusters, iterations, learnRate, 0)
+        CLNN = CL_NN.competitiveLearning(input, clusters_nr, iterations, learnRate, 0)
         CLNN.competitive_learning()
         clusters = CLNN.create_clusters()
         print("hidden nodes: " + str(clusters))
         print("iterations: " + str(iterations))
         print("learning rate: " + str(learnRate))
     elif alg == "aco":
+        clusters_nr = 25
         print("Ant-Colony Optimization")
-        ants = 50
+        ants = 10
+        evaporation = 0.1
         iterations = 1000
-        clusters = ACO.aco(input, ants, iterations)
+        AntColony = ACO.ACO(data=input, max_iter=iterations, evaporation_rate=evaporation, no_ants=ants, no_clusters=clusters_nr)
+        AntColony.run()
+        clusters = AntColony.calculate_clusters()
         print("number of ants: " + str(ants))
         print("iterations: " + str(iterations * len(input)))
     elif alg == "pso":
