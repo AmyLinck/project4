@@ -1,0 +1,7 @@
+Ant Colony Optimization
+user
+iterations: 2580000
+NumClusters:2
+NumPerCluster:[120, 138]
+Cohesion:1.6626338429121885
+Seperation: 10660.526101309846

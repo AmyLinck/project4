@@ -1,0 +1,8 @@
+Competitive Learning Neural Network
+abalone
+iterations: 10000
+
+NumClusters:3
+NumPerCluster:[1945, 1, 2231]
+Cohesion:1.3233904463657384
+Seperation: 4191583.536559706

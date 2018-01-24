@@ -1,0 +1,7 @@
+Ant Colony Optimization
+cmc
+iterations: 14600000
+NumClusters:20
+NumPerCluster:[75, 76, 62, 80, 95, 67, 71, 71, 67, 80, 59, 74, 68, 70, 66, 72, 70, 71, 94, 72]
+Cohesion:75.01213473068618
+Seperation: 3966544.271033924

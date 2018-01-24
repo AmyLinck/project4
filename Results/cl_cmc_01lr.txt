@@ -1,0 +1,8 @@
+Competitive Learning Neural Network
+cmc
+iterations: 10000
+
+NumClusters:13
+NumPerCluster:[8, 1, 1, 72, 377, 3, 2, 2, 97, 142, 355, 207, 193]
+Cohesion:23.050049850515695
+Seperation: 3740480.0128758918

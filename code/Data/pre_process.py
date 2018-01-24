@@ -18,7 +18,7 @@ class PreProcess:
         else:
             if dataset == 'abalone':
                 print("Abalone Dataset")
-                dataFile = 'abalone'
+                dataFile = 'abalone_full'
             elif dataset == "cmc":
                 print("Contraceptive Method Choice Dataset")
                 dataFile = 'contraceptive_method_choice'

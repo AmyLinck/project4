@@ -1,0 +1,8 @@
+Competitive Learning Neural Network
+balance
+iterations: 10000
+
+NumClusters:15
+NumPerCluster:[5, 5, 15, 25, 5, 40, 45, 10, 10, 35, 95, 75, 80, 85, 95]
+Cohesion:17.166792606192846
+Seperation: 598335.6036054267

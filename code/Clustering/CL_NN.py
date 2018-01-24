@@ -86,6 +86,7 @@ class competitiveLearning:
     """
     Create the clusters based on the distance between each datapoint and weight vector,
     the datapoint gets added to the cluster corresponding to the weight vector with the lowest distance.
+    Used to calculate cohesion and separation.
     """
     def create_clusters(self):
         #initialize correct amount of clusters

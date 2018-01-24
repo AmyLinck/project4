@@ -1,0 +1,7 @@
+Ant Colony Optimization
+fertility
+iterations: 1000000
+NumClusters:10
+NumPerCluster:[14, 7, 5, 12, 5, 9, 12, 11, 17, 8]
+Cohesion:17.72592406108903
+Seperation: 7724.548017472727

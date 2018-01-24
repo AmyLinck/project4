@@ -1,0 +1,8 @@
+Competitive Learning Neural Network
+fertility
+iterations: 10000
+
+NumClusters:8
+NumPerCluster:[8, 5, 5, 8, 2, 41, 16, 15]
+Cohesion:8.275287678080016
+Seperation: 7376.431796830257
